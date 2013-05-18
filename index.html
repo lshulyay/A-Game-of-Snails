@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Impact Game</title>
+	<style type="text/css">
+		html,body {
+			background-color: #333;
+			color: #fff;
+			font-family: helvetica, arial, sans-serif;
+			margin: 0;
+			padding: 0;
+			font-size: 12pt;
+		}
+		
+		#canvas {
+			position: absolute;
+			left: 0;
+			right: 0;
+			top: 0;
+			bottom: 0;
+			margin: auto;
+			z-index: 1;
+		}
+
+		#accessPrompt {
+			position: absolute;
+			background-color: #000000;
+			width: 200px;
+			height: 280px;
+			padding: 15px;
+			display: block;
+			z-index: 100;
+			left: 0;
+			right: 0;
+			top: 0;
+			bottom: 0;
+			margin: auto;
+		}
+
+		#namePrompt {
+			position: absolute;
+			background-color: #000000;
+			width: 140px;
+			height: 110px;
+			padding: 15px;
+			display: none;
+			z-index: 100;
+			left: 0;
+			right: 0;
+			top: 0;
+			bottom: 0;
+			margin: auto;
+		}
+
+		#createracePrompt {
+			position: absolute;
+			background-color: #000000;
+			width: 200px;
+			height: 200px;
+			padding: 15px;
+			display: none;
+			z-index: 100;
+			left: 0;
+			right: 0;
+			top: 0;
+			bottom: 0;
+			margin: auto;
+		}
+
+		input {
+			font-size: 300%;
+			border: 0;
+			display: block;
+			margin: 0;
+		}
+
+		input[type=text] { 
+			width: 100%;
+		}
+
+		input[type=button] { 
+  			width: 101.5%;
+  			font-size: 150%;
+		}
+
+		select {
+			width: 101.5%;
+			font-size: 150%;
+			margin-bottom: 15px;
+		}
+
+		#snailMenu {
+			position: absolute;
+			background-color: #000000;
+			width: 200px;
+			height: 200px;
+			padding: 15px;
+			display: none;
+			z-index: 100;
+			left: 0;
+			right: 0;
+			top: 0;
+			bottom: 0;
+			margin: auto;
+		}
+
+	</style>
+
+	<script type="text/javascript" src="lib/impact/impact.js"></script>
+	<script type="text/javascript" src="lib/game/main.js"></script>
+	<script src="http://localhost:3000/socket.io/socket.io.js"></script>
+</head>
+<body>
+	<canvas id="canvas"></canvas>
+	<form id="namePrompt">
+		<input type="text" name="name" id="name"><br>
+		<input type="button" value="Name Snail" id="button" onclick="ig.game.controller.setSnailName()">
+	</form>
+	<form id="accessPrompt">
+		Username: <br />
+		<input type="text" name="username" id="username"><br>
+		Password: <br />
+		<input type="text" name="password" id="password"><br>
+		<input type="button" value="Login" id="loginButton" onclick="ig.game.impactSocket.loginUser()"><br>
+		<input type="button" value="Register" id="registerButton" onclick="ig.game.impactSocket.registerUser()">
+	</form>
+	<form id="createracePrompt">
+		Race name: <br />
+		<input type="text" name="racename" id="racename"><br>
+		Required entrants: <br />
+		<select name="reqentrants" id="reqentrants">
+		<option value="3">3</option>
+		<option value="4">4</option>
+		<option value="5">5</option>
+		<option value="6">6</option>
+		<option value="7">7</option>
+		<option value="8">8</option>
+		<option value="9">9</option>
+		<option value="10">10</option>
+		</select>		
+		Distance: <br />
+		<select name="distance" id="distance">
+		<option value="5">5cm</option>
+		<option value="10">10cm</option>
+		<option value="15">15cm</option>
+		</select>		
+		<input type="button" value="Create Race" id="createraceButton" onclick="ig.game.impactSocket.createRace()"><br>
+	</form>
+	<div id="snailMenu"></div>
+</body>
+</html>

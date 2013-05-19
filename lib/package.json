@@ -1,9 +1,13 @@
 {
-    "name": "game-of-snails",
-    "description": "A Game of Snails",
-    "version": "0.0.1",
-    "private": true,
-    "dependencies": {
-        "express": "3.x"
-    }
+  "name": "A Game of Snails",
+  "version": "0.0.1",
+  "dependencies": {
+    "mongodb": "*",
+    "mongoose": "*",
+    "socket.io": "*"
+  },
+  "engines": {
+    "node": "*",
+    "npm": "*"
+  }
 }

@@ -1,5 +1,5 @@
 {
-  "name": "A Game of Snails",
+  "name": "a-game-of-snails",
   "version": "0.0.1",
   "dependencies": {
     "mongodb": "*",

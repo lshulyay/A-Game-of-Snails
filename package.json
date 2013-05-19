@@ -7,7 +7,7 @@
     "socket.io": "*"
   },
   "engines": {
-    "node": "*",
+    "node": "0.10.6",
     "npm": "*"
   }
 }

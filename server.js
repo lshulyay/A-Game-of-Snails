@@ -190,7 +190,7 @@ socket.on('connection', function(client){
 				}
 				snail.health = snail.currEndurance + snail.weight;
 				// Set action. 1: move forward; 2: bump snail; 3: stop
-				console.log('ID: ' + snail._id11 + ' health: ' + snail.health);
+				console.log('ID: ' + snail._id + ' health: ' + snail.health);
 			}
 		}
 

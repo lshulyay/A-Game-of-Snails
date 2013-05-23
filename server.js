@@ -175,15 +175,19 @@ socket.on('connection', function(client){
 		});	
 	});
 
-	client.on('runrace', function(data) {
+	client.on('runrace', function(data, cb) {
 		var distance = data.race.distance;
 		var entrantsArr = data.entrants;
+		var raceResultsArr= [];
 		// For every step in the race...
 		for (var i = 0; i < distance; i++) {
 			// For every entrant...
 			for (var n = 0; n < entrantsArr.length; n++) {
 				var snail = entrantsArr[n];
 				snail.racePosition = i;
+				if (snail.racePosition >= distance) {
+					raceResultsArr.push(snail);
+				}
 				// Apply endurance decay
 				if (snail.currEndurance > 0) {
 					snail.currEndurance--;
@@ -202,6 +206,8 @@ socket.on('connection', function(client){
 				console.log('ID: ' + snail._id + ' race position: ' + snail.racePosition);
 			}
 		}
+		data.race.resultsArr = raceResultsArr;
+		cb(null,raceResultsArr);
 
 	});
 
@@ -311,6 +317,7 @@ var raceSchema = mongoose.Schema({
     reqEntrants: Number,
     distance: Number,
     finished: Boolean,
+    raceResultsArr: [],
 })
 
 var userSchema = mongoose.Schema({

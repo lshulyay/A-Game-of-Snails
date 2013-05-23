@@ -187,6 +187,7 @@ socket.on('connection', function(client){
 				snail.racePosition = i;
 				if (snail.racePosition >= distance) {
 					raceResultsArr.push(snail);
+					console.log('pushed: ' + raceResultsArr);
 				}
 				// Apply endurance decay
 				if (snail.currEndurance > 0) {

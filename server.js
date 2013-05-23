@@ -187,9 +187,9 @@ socket.on('connection', function(client){
 				// Apply endurance decay
 				if (snail.currEndurance > 0) {
 					snail.currEndurance--;
+					console.log('currEndurance: ' + snail.currEndurance);
 				}
 				snail.health = snail.currEndurance + snail.weight;
-				console.log('currEndurance: ' + snail.currEndurance);
 				// Set action. 1: move forward; 2: bump snail; 3: stop
 				// Move forard if endurance > 0 and condition !== hindered
 				// Stop if endurance <= 0 or condition === hindered (take off hindered state)

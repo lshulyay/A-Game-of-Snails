@@ -187,12 +187,18 @@ socket.on('connection', function(client){
 				// Apply endurance decay
 				if (snail.currEndurance > 0) {
 					snail.currEndurance--;
-					console.log('currEndurance: ' + snail.currEndurance);
 				}
 				snail.health = snail.currEndurance + snail.weight;
 				// Set action. 1: move forward; 2: bump snail; 3: stop
 				// Move forard if endurance > 0 and condition !== hindered
 				// Stop if endurance <= 0 or condition === hindered (take off hindered state)
+				if (snail.raceCondition !== 'hindered' && snail.currEndurance > 0) {
+					snail.raceAction = 'move';
+				}
+				else {
+					snail.raceAction = 'stop';
+					continue;
+				}
 				console.log('ID: ' + snail._id + ' race position: ' + snail.racePosition);
 			}
 		}

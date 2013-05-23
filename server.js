@@ -178,19 +178,22 @@ socket.on('connection', function(client){
 	client.on('runrace', function(data) {
 		var distance = data.race.distance;
 		var entrantsArr = data.entrants;
-		console.log('length: ' + entrantsArr.length);
 		// For every step in the race...
 		for (var i = 0; i < distance; i++) {
 			// For every entrant...
 			for (var n = 0; n < entrantsArr.length; n++) {
 				var snail = entrantsArr[n];
+				snail.racePosition = i;
 				// Apply endurance decay
 				if (snail.currEndurance > 0) {
 					snail.currEndurance--;
 				}
 				snail.health = snail.currEndurance + snail.weight;
+				console.log('currEndurance: ' + snail.currEndurance);
 				// Set action. 1: move forward; 2: bump snail; 3: stop
-				console.log('ID: ' + snail._id + ' health: ' + snail.health);
+				// Move forard if endurance > 0 and condition !== hindered
+				// Stop if endurance <= 0 or condition === hindered (take off hindered state)
+				console.log('ID: ' + snail._id + ' race position: ' + snail.racePosition);
 			}
 		}
 
@@ -337,6 +340,10 @@ var snailSchema = mongoose.Schema({
     currEndurance: Number,
     weight: Number,
     health: Number,
+
+    raceAction: String,
+    raceCondition: String,
+    racePosition: Number,
 
     genes: {
         shellColor: {allele1: String, allele2: String},

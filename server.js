@@ -185,7 +185,7 @@ socket.on('connection', function(client){
 			for (var n = 0; n < entrantsArr.length; n++) {
 				var snail = entrantsArr[n];
 				snail.racePosition = i;
-				if (snail.racePosition >= distance) {
+				if (snail.racePosition >= distance - 1) {
 					raceResultsArr.push(snail);
 					console.log('pushed: ' + raceResultsArr);
 				}

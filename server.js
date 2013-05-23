@@ -175,7 +175,7 @@ socket.on('connection', function(client){
 		});	
 	});
 
-	client.on('runrace', function(data, cb) {
+	client.on('runrace', function (data, cb) {
 		var distance = data.race.distance;
 		var entrantsArr = data.entrants;
 		var raceResultsArr= [];
@@ -207,6 +207,7 @@ socket.on('connection', function(client){
 			}
 		}
 		data.race.resultsArr = raceResultsArr;
+		console.log('raceResultsArr: ' + raceResultsArr);
 		cb(null,raceResultsArr);
 
 	});

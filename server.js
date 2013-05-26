@@ -43,12 +43,17 @@ socket.on('connection', function(client){
 		console.log('Server has disconnected');
 	});
 
-	client.on('registeruser', function (data) {
+	client.on('registeruser', function (data, cb) {
 		console.log('add user: ' + data.username);
 		var user = new User({ username: data.username, password: data.password, newUser: true });
 		user.save(function (err, user) {
-		  if (err) // TODO handle the error
-		  console.log('saved');
+			if (err) {
+				console.log('err: ' + err);
+			}
+			else {
+				console.log('saved');
+				cb(null,'test');
+			}
 		});
 	});
 

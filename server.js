@@ -174,20 +174,38 @@ socket.on('connection', function(client){
 		console.log('load all races');
 		var race = mongoose.model('Race', raceSchema);
 		var finished = data;
-		race.find({'finished': finished}, function(err, docs) {
-			console.log('looking for races');
-			var races = docs;
-			if (races !== null) {
-				console.log('emit races: ' + races);
-				// client.emit('setsessionraces', races)
-				cb(null, races);
+		if (finished !== null) {
+			race.find({'finished': finished}, function(err, docs) {
+				console.log('looking for races');
+				var races = docs;
+				if (races !== null) {
+					console.log('emit races: ' + races);
+					// client.emit('setsessionraces', races)
+					cb(null, races);
 
-			}
-			else {
-				console.log('no races found');
-				cb (null, null);
-			}
-		});	
+				}
+				else {
+					console.log('no races found');
+					cb (null, null);
+				}
+			});	
+		}
+		else {
+			race.find(function(err, docs) {
+				console.log('looking for races');
+				var races = docs;
+				if (races !== null) {
+					console.log('emit races: ' + races);
+					// client.emit('setsessionraces', races)
+					cb(null, races);
+
+				}
+				else {
+					console.log('no races found');
+					cb (null, null);
+				}
+			});	
+		}
 	});
 
 	client.on('runrace', function (data, cb) {
@@ -201,7 +219,7 @@ socket.on('connection', function(client){
 				var snail = entrantsArr[n];
 				snail.racePosition = i;
 				if (snail.racePosition >= distance - 1) {
-					raceResultsArr.push(snail);
+					raceResultsArr.push(snail._id);
 					console.log('pushed: ' + raceResultsArr);
 				}
 				// Apply endurance decay

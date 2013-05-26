@@ -208,7 +208,14 @@ socket.on('connection', function(client){
 			}
 		}
 		data.race.resultsArr = raceResultsArr;
-		console.log('raceResultsArr: ' + raceResultsArr);
+		var attrToUpdate = 'resultsArr';
+		var newAttr = raceResultsArr;
+		var raceID = data.race._id;
+		var conditions = {_id: raceID};
+		//	update = {$set: {attrToUpdate: newAttr}}
+		var update = {}; 
+  		update[attrToUpdate] = newAttr; 
+		Race.update(conditions,{ $set: update },function(err){});
 		cb(null,raceResultsArr);
 
 	});
@@ -235,7 +242,6 @@ socket.on('connection', function(client){
 	        	}
 			});
 		}
-
 		// If snailID is not present, simply refresh race list and send to client
 		var race = mongoose.model('Race', raceSchema);
 		// Get array of all entrants

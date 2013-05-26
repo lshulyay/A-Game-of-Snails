@@ -354,6 +354,7 @@ var raceSchema = mongoose.Schema({
 })
 
 var userSchema = mongoose.Schema({
+	unique: true,
     username: String,
     password: String,
     newUser: Boolean,
@@ -361,7 +362,7 @@ var userSchema = mongoose.Schema({
 })
 
 var snailSchema = mongoose.Schema({
-
+	unique: true,
 	// Core stats
 	ownerID: mongoose.Schema.Types.ObjectId,
 	inDb: Boolean,
@@ -412,13 +413,6 @@ var snailSchema = mongoose.Schema({
     doeID: Number
 })
 
-// NOTE: methods must be added to the schema before compiling it with mongoose.model()
-userSchema.methods.speak = function () {
-  var greeting = this.name
-    ? "Meow name is " + this.name
-    : "I don't have a name"
-  console.log(greeting);
-}
 
 var User = mongoose.model('User', userSchema)
 var Snail = mongoose.model('Snail', snailSchema)

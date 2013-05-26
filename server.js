@@ -367,10 +367,7 @@ var snailSchema = mongoose.Schema({
 	// Core stats
 	ownerID: mongoose.Schema.Types.ObjectId,
 	inDb: Boolean,
-	name:  {
-        type:String,
-        unique: true,
-    },    
+	name: String,
 	size: {x: Number, y: Number},
     age: Number,
     adult: Boolean,

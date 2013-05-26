@@ -19,9 +19,6 @@ server.listen(port);
 
 // Create a Socket.IO instance, passing it our server
 var socket = io.listen(server);
-// var _io = require("socket.io");
-// var io = _io.listen(server);
-// var io = require('socket.io').listen(server);
 
 // assuming io is the Socket.IO server object
 socket.configure(function () { 
@@ -273,26 +270,22 @@ socket.on('connection', function(client){
 		race.findOne({ '_id': raceID }, 'entrantsArr reqEntrants distance', function (err, race) {
 			console.log('entrants: ' + race.entrantsArr.length);
 			var enteredSnailsArr = [];
-			// for each entrant, find snail with matching ID
-	/*		for (var i = 0; i < race.entrantsArr.length; i++) {
-				var entryID = race.entrantsArr[i];
-				var snail = mongoose.model('Snail', snailSchema);
-				snail.findOne({'_id': entryID}, function(err, snail) {
-					enteredSnailsArr.push(snail)
-				//	client.emit('loadracingsnail', snail);
-					// console.log('pushed ' + enteredSnailsArr.length);
-					if (i === race.entrantsArr.length) {
-						console.log('enteredSnailsArr: ' + enteredSnailsArr.length);
-						cb(null,enteredSnailsArr);
-					}
-
-				});
-			} */
 			for (var i = 0; i < race.entrantsArr.length; i++) {
 				var entryID = race.entrantsArr[i];
 				var snail = mongoose.model('Snail', snailSchema);
 				snail.findOne({'_id': entryID}, function(err, snail) {
-					client.emit('loadracingsnail', snail);
+					var snailpackage = snail;
+					var ownerID = snail.ownerID;
+					var owner = mongoose.model('User', userSchema);
+					user.findOne({'_id': ownerID}, function(err, user) {
+						if (err) {
+							console.log('error: ' + err);
+						}
+						else {
+							snailpackage.ownerName = user.username;
+							client.emit('loadracingsnail', snailpackage);
+						}
+					})
 				});
 			} 
 			if (race.entrantsArr.length === race.reqEntrants) {
@@ -301,44 +294,6 @@ socket.on('connection', function(client){
 		});
 	});
 });
-
-
-/* socket.on('connection', function (socket) {
-  socket.emit('news', { hello: 'world' });
-  socket.on('my other event', function (data) {
-    console.log(data);
-  });
-}); */
-
-/* socket.on('connection', function (socket) {
-		// Login
-		socket.on ('loginuser', function (data) {
-			// Gets user 
-			var user = mongoose.model('User', userSchema);
-			// Find user with passed username and password
-			user.findOne({ 'username': data.username, 'password': data.password }, 'username password newUser _id', function (err, user) {
-			  	// If user is not found, say so to client
-			  	if (!user) {
-			  		console.log('not found');
-	  				socket.emit('setuser', { username: null });
-			  	}
-
-			  	// If user is found, pass logged in username
-			  	else if (user) {
-			  		console.log('%s is a %s.', user.username, user.password) // Space Ghost is a talk show host.
-	  				console.log('ID: ' + user._id);
-	  				socket.emit('setuser', { username: user.username });
-	  				// Find all snails owned by user
-	  				if (!user.newUser) {
-
-	  				}
-	  			}
-			})
-
-		// var user = new User({ name: data.username, password: data.password });
-		});	
-}); */
-
 
 
 /******* END SOCKET IO STUFF *******/

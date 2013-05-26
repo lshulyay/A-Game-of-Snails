@@ -106,8 +106,7 @@
 
 	</style>
 
-	<script type="text/javascript" src="lib/impact/impact.js"></script>
-	<script type="text/javascript" src="lib/game/main.js"></script>
+	<script type="text/javascript" src="game.min.js"></script>
 	<script src="http://gentle-cliffs-3423.herokuapp.com/socket.io/socket.io.js"></script>
 </head>
 <body>
@@ -147,5 +146,22 @@
 		<input type="button" value="Create Race" id="createraceButton" onclick="ig.game.impactSocket.createRace()"><br>
 	</form>
 	<div id="snailMenu"></div>
+
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-19019891-1']);
+  _gaq.push(['_setDomainName', 'github.com']);
+  _gaq.push(['_setAllowLinker', true]);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
 </body>
 </html>

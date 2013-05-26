@@ -167,6 +167,13 @@ socket.on('connection', function(client){
 		});
 	});
 
+	client.on('findowner', function (ownerID) {
+		var user = mongoose.model('User', userSchema);
+		user.find({'_id': ownerID}, function(err, owner) {
+			cb(null, owner.username); 
+		});	
+	});
+
 	client.on('loadracelist', function (data, cb) {
 		console.log('load all races');
 		var race = mongoose.model('Race', raceSchema);
@@ -274,18 +281,7 @@ socket.on('connection', function(client){
 				var entryID = race.entrantsArr[i];
 				var snail = mongoose.model('Snail', snailSchema);
 				snail.findOne({'_id': entryID}, function(err, snail) {
-					var snailpackage = snail;
-					var ownerID = snail.ownerID;
-					var owner = mongoose.model('User', userSchema);
-					user.findOne({'_id': ownerID}, function(err, user) {
-						if (err) {
-							console.log('error: ' + err);
-						}
-						else {
-							snailpackage.ownerName = user.username;
-							client.emit('loadracingsnail', snailpackage);
-						}
-					})
+					client.emit('loadracingsnail', snail);
 				});
 			} 
 			if (race.entrantsArr.length === race.reqEntrants) {

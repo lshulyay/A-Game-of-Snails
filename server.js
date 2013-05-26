@@ -88,6 +88,21 @@ socket.on('connection', function(client){
 		console.log('updated ' + snailID);
 	});
 
+	client.on('updaterace', function (data) {
+		// var snailData = data;
+		var attrToUpdate = data.attrToUpdate;
+		var newAttr = data.newAttr;
+		var raceID = data.raceID;
+		console.log('raceID: ' + raceID);
+		var conditions = {_id: raceID};
+		//	update = {$set: {attrToUpdate: newAttr}}
+		var update = {}; 
+  		update[attrToUpdate] = newAttr; 
+
+		Race.update(conditions,{ $set: update },function(err){});
+		console.log('updated ' + raceID);
+	});
+
 	client.on('updateuser', function (data) {
 		// var snailData = data;
 		var attrToUpdate = data.attrToUpdate;
@@ -208,14 +223,6 @@ socket.on('connection', function(client){
 			}
 		}
 		data.race.resultsArr = raceResultsArr;
-		var attrToUpdate = 'resultsArr';
-		var newAttr = raceResultsArr;
-		var raceID = data.race._id;
-		var conditions = {_id: raceID};
-		//	update = {$set: {attrToUpdate: newAttr}}
-		var update = {}; 
-  		update[attrToUpdate] = newAttr; 
-		Race.update(conditions,{ $set: update },function(err){});
 		cb(null,raceResultsArr);
 
 	});
@@ -325,7 +332,7 @@ var raceSchema = mongoose.Schema({
     reqEntrants: Number,
     distance: Number,
     finished: Boolean,
-    raceResultsArr: [],
+    resultsArr: [],
 })
 
 var userSchema = mongoose.Schema({

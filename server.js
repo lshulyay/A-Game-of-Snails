@@ -354,7 +354,10 @@ var raceSchema = mongoose.Schema({
 })
 
 var userSchema = mongoose.Schema({
-    username: String,
+	username:  {
+        type:String,
+        unique: true,
+    },    
     password: String,
     newUser: Boolean,
     activeJars: Number,
@@ -364,7 +367,10 @@ var snailSchema = mongoose.Schema({
 	// Core stats
 	ownerID: mongoose.Schema.Types.ObjectId,
 	inDb: Boolean,
-	name: String,
+	name:  {
+        type:String,
+        unique: true,
+    },    
 	size: {x: Number, y: Number},
     age: Number,
     adult: Boolean,

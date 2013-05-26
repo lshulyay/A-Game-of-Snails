@@ -167,13 +167,6 @@ socket.on('connection', function(client){
 		});
 	});
 
-	client.on('findowner', function (ownerID) {
-		var user = mongoose.model('User', userSchema);
-		user.find({'_id': ownerID}, function(err, owner) {
-			cb(null, owner.username); 
-		});	
-	});
-
 	client.on('loadracelist', function (data, cb) {
 		console.log('load all races');
 		var race = mongoose.model('Race', raceSchema);
@@ -317,6 +310,7 @@ var userSchema = mongoose.Schema({
 var snailSchema = mongoose.Schema({
 	// Core stats
 	ownerID: mongoose.Schema.Types.ObjectId,
+	ownerUsername: String,
 	inDb: Boolean,
 	name: String,
 	size: {x: Number, y: Number},
